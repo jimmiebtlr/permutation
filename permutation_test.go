@@ -1,10 +1,11 @@
 package permutation
 
 import (
-  "strconv"
+  "fmt"
   "testing"
 )
 
+/*
 func TestPermutator(t *testing.T) {
   p := NewPermutator(2, 2)
   perm, complete := p.NextPermutation()
@@ -34,15 +35,13 @@ func TestPermutator(t *testing.T) {
     t.Error("Permutation should be of length 0.")
   }
 }
+*/
 
 func TestPermutatorNumber(t *testing.T) {
-  p := NewPermutator(3, 3)
-  i := 0
-  for _, complete := p.NextPermutation(); !complete; _, complete = p.NextPermutation() {
-    i++
-  }
-  if i != 6 {
-    t.Error("Incorrect number of permutations generated. Expected 6, got " + strconv.Itoa(i))
+  ch := make(chan []int)
+  Permute(7, 7, ch)
+
+  for perm := range ch {
+    fmt.Println(perm)
   }
 }
-
