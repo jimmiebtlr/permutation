@@ -1,3 +1,5 @@
+[![GoDoc](https://godoc.org/github.com/jimmiebtlr/permutation?status.png)](https://godoc.org/github.com/jimmiebtlr/permutation)
+
 ```go
 ch := make(chan []int)
 Permute(5, 5, ch)
