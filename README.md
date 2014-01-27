@@ -24,6 +24,4 @@ for p = range ch {
 ```
 
 [TODO]
-Add GoDoc compatible comments.
-Add README
 Improve test coverage.
