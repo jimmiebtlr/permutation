@@ -2,7 +2,7 @@
 package permutation
 
 // Permute fills a channel with permutations of length, and at most value max.
-// It calls out to concurrently handle the filling of the channel.
+// It launches a goroutine to concurrently handle the filling of the channel.
 // The channel is intended to be used as the index in an array.
 func Permute( max int, length int, ch chan []int){
   go fillPermChan( length, max, ch)
