@@ -1,13 +1,17 @@
+// Package permutation provides concurrent permutation enumeration.
 package permutation
 
+// Permute fills a channel with permutations of length, and at most value max.
+// It calls out to concurrently handle the filling of the channel.
+// The channel is intended to be used as the index in an array.
 func Permute( max int, length int, ch chan []int){
   go fillPermChan( length, max, ch)
 }
 
-
+// fillPermChan fills a channel with permutations of length, and at most value max.
 func fillPermChan( length, max int, ch chan []int ){
   used := make( []bool, max )
-  perm := initialPerm( max, length, used )
+  perm := initialPerm( length, max, used )
 
   p := make( []int, length )
   copy(p, perm)
@@ -21,7 +25,9 @@ func fillPermChan( length, max int, ch chan []int ){
   close(ch )
 }
 
-func initialPerm( max, length int, used []bool )( perm []int ){
+// initialPerm takes max and length, creats the initial permutation.
+// Used is modified to reflect the state of the initial permutation.
+func initialPerm( length, max int, used []bool )( perm []int ){
   perm = make( []int, length )
   for i := int(0); i < length; i++ {
     perm[i] = length - i - 1
@@ -30,6 +36,10 @@ func initialPerm( max, length int, used []bool )( perm []int ){
   return perm
 }
 
+// incrementElement updates perm to the next avaliable.
+// It ensures each element is unique using used, and updates it to reflect changes.
+// Recursivly calls itself if the current index cannot be incremented further.
+// Returns success when the next permutation exists, false if not (last perm was last possible permutation).
 func incrementElement(index, length, max int, used []bool, perm []int) (success bool) {
   // If the value is as high as it can go
   next, inc := nextEmptyElement(perm[index], max, used )
@@ -65,6 +75,7 @@ func incrementElement(index, length, max int, used []bool, perm []int) (success 
   return true
 }
 
+// nextEmptyElement finds the next unused element from used.
 func nextEmptyElement(current, max int, used []bool) (nxtEmpty int, increase bool) {
   for i := current + 1; i < max; i++ {
     if used[i] == false {
